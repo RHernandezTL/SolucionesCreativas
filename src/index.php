@@ -1,3 +1,4 @@
+<?php include('database/config.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,16 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opinión de cumplimiento</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/13403dc2d8.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet"/>
+    <?php include('view/header.php')?>
 
 </head>
 <body>
-    <div class="container py-4">
-
-    <h2 class="container text-center my-4 py-4">Consulta al API del proveedor SATWS</h2>
+    <div class="container py-3">
+    <?php include('view/menu.php')?>
+    <h2 class="container text-center my-4 py-4">Consulta al API del proveedor SATWS en el ambiente de [<?php echo $GLOBALS["Environment"]; ?>]</h2>
 
     <div class="table-responsive py-4">
         <table class="table table-dark align-middle" id="tblOpinion">
@@ -90,8 +88,8 @@
     <!-- INIT MODAL -->
 
     <!-- INIT SCRIPT -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+    <?php include('view/footer.php')?>
+    
     <script src="js/index.js"></script>
     <!-- FINISH SCRIPT -->
 </body>

@@ -3,8 +3,9 @@ namespace Model;
 
 class extraction{
 
+    public $nIdExtration;
     public $nID;
-    public $sContribullente;
+    public $sContribuyente;
     public $sRFC;
     public $sExtractor;
     public $sPersonType;
@@ -19,6 +20,13 @@ class extraction{
     public $nRateLimitedAt;
     public $dCreatedAt;
 
+    public function getnIdExtration() {
+        return $this->nIdExtration;
+    }
+    public function setnIdExtration($value) {
+        $this->nIdExtration = $value;
+    }
+    
     public function getnID() {
         return $this->nID;
     }
@@ -26,11 +34,11 @@ class extraction{
         $this->nID = $value;
     }
    
-    public function getsContribullente() {
-        return $this->sContribullente;
+    public function getsContribuyente() {
+        return $this->sContribuyente;
     }
-    public function setsContribullente($value) {
-        $this->sContribullente = $value;
+    public function setsContribuyente($value) {
+        $this->sContribuyente = $value;
     }
   
     public function getsRFC() {
@@ -128,7 +136,7 @@ class extraction{
 
         $db = new \Database\DB($GLOBALS["hostname"],$GLOBALS["username"],$GLOBALS["password"],$GLOBALS["database"],$GLOBALS["dbport"]);
 
-        $selectExtraction = $db->query("CALL `db_satws`.`sp_select_extractions`()");
+        $selectExtraction = $db->query("CALL `db_satws_v2`.`sp_select_extractions`()");
 
         $insertError = $db->getError();
         if ($insertError) {
@@ -145,6 +153,29 @@ class extraction{
         }
         return $response;
     }
+    
+    public function getInfoExtractionByIdExt(){
+
+        $db = new \Database\DB($GLOBALS["hostname"],$GLOBALS["username"],$GLOBALS["password"],$GLOBALS["database"],$GLOBALS["dbport"]);
+
+        $params = array(
+            self::getnIdExtration()
+        );
+        $selectExtractionID = $db->query("CALL `db_satws_v2`.`sp_select_extractions_by_id`(?)",$params);
+
+        $insertError = $db->getError();
+        if ($insertError) {
+            $response = array(
+                'nCodigoError' => 99,
+                'sMensajeError'  => $insertError
+            );
+        } else {
+            $response = array(
+                'sDataExtraction' => array_shift($selectExtractionID)
+            );
+        }
+        return $response;
+    }
 
     public function insertExtraction()
     {
@@ -152,7 +183,7 @@ class extraction{
 
         $params = array(
             self::getnID(),
-            self::getsContribullente(),
+            self::getsContribuyente(),
             self::getsRFC(),
             self::getsExtractor(),
             self::getsPersonType(),
@@ -168,7 +199,7 @@ class extraction{
             self::getdCreatedAt()
         );
 
-        $insertExtraction = $db->query("CALL `db_satws`.`sp_insert_extractions`(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",$params);
+        $insertExtraction = $db->query("CALL `db_satws_v2`.`sp_insert_extractions`(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",$params);
         $insertError = $db->getError();
         if ($insertError) {
             $response = array(
