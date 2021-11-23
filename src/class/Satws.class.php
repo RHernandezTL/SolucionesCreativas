@@ -104,17 +104,12 @@ class Satws{
 
     public function downloadPdfOpinion(){
 
-        $_URL = "https://api.sandbox.satws.com/files/".self::getsResource()."/download";
-        // print($_URL);
+        $_URL = $GLOBALS["URL_SATWS"]."files/".self::getsResource()."/download";
         $curl = curl_init();        
         curl_setopt_array($curl, array(
             CURLOPT_URL => $_URL,
             CURLOPT_RETURNTRANSFER => true,
-                // CURLOPT_ENCODING => '',
-                // CURLOPT_MAXREDIRS => 10,
                 CURLOPT_TIMEOUT => 0,
-                // CURLOPT_FOLLOWLOCATION => true,
-                // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'GET',            
                 CURLOPT_HTTPHEADER => array(
                     'X-API-Key: '. $GLOBALS["keyApp"],
@@ -123,8 +118,6 @@ class Satws{
             ));
             
             $responseGral = curl_exec($curl);
-            // print_r($responseGral);
-            // exit;
 
             $nCodigoError ="";
             $sMensajeError ="";
@@ -140,8 +133,6 @@ class Satws{
                 'sData' => $srtResponse
             );
             curl_close($curl);
-            // echo "\n";
-            // print_r($srtResponse);
             return $response;
     }
 
