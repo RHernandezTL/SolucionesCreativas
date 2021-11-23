@@ -31,7 +31,7 @@
 
         $curl = curl_init();        
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $GLOBALS["URL_SATWS"],
+            CURLOPT_URL => $GLOBALS["URL_SATWS"]."extractions",
             CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -67,7 +67,7 @@
                 $responseApi = (array)json_decode($responseGral, true);
                 curl_close($curl);
                 $extract = new Model\extraction();
-
+                
                 foreach ($responseApi["hydra:member"] as $value) {
                     $periodFrom = "";
                     $periodTo = "";
@@ -75,15 +75,46 @@
                         $periodFrom = $value["options"]["period"]["from"] ? $value["options"]["period"]["from"] : "";
                         $periodTo = $value["options"]["period"]["to"] ? $value["options"]["period"]["to"] : "";
                     }
+                    $extractor = "";
+                    switch ($value["extractor"]) {
+                        case 'tax_compliance':
+                            $extractor = "Opinión de Cumplimiento";
+                            break;                        
+                            
+                        case 'monthly_tax_return':
+                            $extractor = "Declaración Mensual";
+                            break;                        
+                        case 'annual_tax_return':
+                            $extractor = "Declaración Anual";
+                            break;                        
+                        case 'tax_retention':
+                            $extractor = "Retenciones";
+                            break;                        
+                        case 'rif_tax_return':
+                            $extractor = "Declaración RIF";
+                            break;                        
+                        case 'tax_status':
+                            $extractor = "Situación fiscal";
+                            break;                        
+                        case 'invoice':
+                            $extractor = "Factura";
+                            break;                        
+                        default:
+                            $extractor = "Indefinido";
+                            break;
+                    }
+                    if ($value["status"] == "finished") {
+                        $estatus = "Finalizado";
+                    }
 
                     $extract->setnID($value["id"]);
                     $extract->setsContribuyente($value["taxpayer"]["name"]);
                     $extract->setsRFC($value["taxpayer"]["id"]);
-                    $extract->setsExtractor($value["extractor"]);
+                    $extract->setsExtractor($extractor);
                     $extract->setsPersonType($value["taxpayer"]["personType"]);
                     $extract->setdPeriodTo($periodTo);
                     $extract->setdPeriodFrom($periodFrom);
-                    $extract->setsStatus($value["status"]);
+                    $extract->setsStatus($estatus);
                     $extract->setdStartedAt($value["startedAt"]);
                     $extract->setdUpdatedAt($value["updatedAt"]);
                     $extract->setsDuration("00:00:00");

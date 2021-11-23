@@ -49,11 +49,12 @@ class Satws{
 
 
     public function getOpinionCompliance(){
+        
         $curl = curl_init();
         $headers = array();
         $headers[] = 'Contetn-Type: application/json';
         $headers[] = 'Authorization: '.$GLOBALS["keyApp"];
-        curl_setopt($curl, CURLOPT_URL, "https://api.sandbox.satws.com/extractions");
+        curl_setopt($curl, CURLOPT_URL, $GLOBALS["URL_SATWS"] . "extractions");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $res = curl_exec($curl);
 
@@ -63,8 +64,9 @@ class Satws{
     }
 
     public function getEventOpinionCompliance(){
-        $_Get_Params = "itemsPerPage=20"."&source=%2Fextractions%2F".self::getnID();
-        $_URL_Events = "https://api.sandbox.satws.com/events?".$_Get_Params;
+        
+        $_Get_Params = "events?itemsPerPage=20"."&source=%2Fextractions%2F".self::getnID();
+        $_URL_Events = $GLOBALS["URL_SATWS"].$_Get_Params;
         $curl = curl_init();        
         curl_setopt_array($curl, array(
             CURLOPT_URL => $_URL_Events,
@@ -147,7 +149,7 @@ class Satws{
         $type = self::getsType();
         $Password = self::getsPassword();
         $RFC = self::getsRFC();
-        $_URL = "https://api.sandbox.satws.com/credentials";
+        $_URL = $GLOBALS["URL_SATWS"]."credentials";
         $curl = curl_init();        
         curl_setopt_array($curl, array(
             CURLOPT_URL => $_URL,
