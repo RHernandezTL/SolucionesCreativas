@@ -41,6 +41,7 @@ function getOpinion() {
             $('#sDuration').html(objDetalle.sDuration);
             $('#nCreatedDataPoints').html(objDetalle.nCreatedDataPoints);
             $('#nUpdatedDataPoints').html(objDetalle.nUpdatedDataPoints);
+            $('#sResultado').html(objDetalle.nUpdatedDataPoints);
             
             var sHtml = '';
             var num = 1;
@@ -49,9 +50,9 @@ function getOpinion() {
                     sHtml = sHtml + '<tr>';
                     sHtml = sHtml + '<td class="align-middle text-center">' + objet[key]['nIDEv'] + '</td>';                                                      //ID
                     sHtml = sHtml + '<td class="align-middle text-center"><span class="">' + objet[key]["sTaxplayer"] + '</span></td>';                               //Contribullente
-                    sHtml = sHtml + '<td class="align-middle text-left"><span>' + objet[key]["sTypeEvent"] + '</span></span></td>'; // Extractor
-                    sHtml = sHtml + '<td class="align-middle text-center"><span>' + objet[key]["sResource"] + '</span></td>';       //Duracion
-                    sHtml = sHtml + '<td class="align-middle text-center"><span>' + objet[key]["dCreateAt"] + '</span></td>';          //Creados En
+                    sHtml = sHtml + '<td class="align-middle text-left"><span>' + objet[key]["sTypeEvent"] + '</span></span></td>'; // Tipo de evento
+                    sHtml = sHtml + '<td class="align-middle text-center"><span>' + objet[key]["sResult"] + '</span></td>';       //Resultado
+                    sHtml = sHtml + '<td class="align-middle text-center"><span>' + objet[key]["dCreateAt"] + '</span></td>';     //Creados En
                     sHtml = sHtml + '<td class="align-middle text-center">';
                     sHtml = sHtml + '<a id="downloadPDF" href="#" data-pdf="' + objet[key]["sURLTaxtConpliance"] + '"><i class="fas fa-file-pdf fa-5x"></i></a>';             //Acciones
                     sHtml = sHtml + '</td>';

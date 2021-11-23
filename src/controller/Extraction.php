@@ -31,7 +31,7 @@
 
         $curl = curl_init();        
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $GLOBALS["URL_SATWS"]."extractions",
+            CURLOPT_URL => $GLOBALS["URL_SATWS"]."extractions/?itemsPerPage=100",
             CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -104,7 +104,9 @@
                             break;
                     }
                     if ($value["status"] == "finished") {
-                        $estatus = "Finalizado";
+                        $estatus = "Terminado";
+                    }elseif($value["status"] == "failed"){
+                        $estatus = "Error";
                     }
 
                     $extract->setnID($value["id"]);

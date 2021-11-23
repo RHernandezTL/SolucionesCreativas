@@ -95,7 +95,7 @@ $postParams = $_POST; ?>
                             <th>ID</th>
                             <th>Contribuyente</th>
                             <th>Tipo</th>
-                            <th>Recurso</th>
+                            <th>Resultado</th>
                             <th>Creado En</th>
                             <th>Acciones</th>
                         </tr>

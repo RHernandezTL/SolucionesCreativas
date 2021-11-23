@@ -43,12 +43,13 @@ if (!empty($params)) {
                     $data = $consultSatWs["sData"];
                     $hidraMember = (array)json_decode($data, true);
                     $arrayEvents = $hidraMember["hydra:member"];
-                    // print_r($arrayEvents);
+
                     foreach ($arrayEvents as $value) {
-                        // echo count($value["data"]["object"])." Ver filas";
                         $URLDownloadPDF = "";
                         $_type= "";
                         $_Resourse = isset($value["data"]["object"]["file"]) > 0 ? $value["data"]["object"]["file"]["id"] : "";
+                        $_Result = isset($value["data"]["object"]["file"]) > 0 ? $value["data"]["object"]["result"] : "";
+                        
                         switch ($value["type"]) {
                             case 'file.created':
                                 $_type= "Archivo Creado.";
@@ -58,7 +59,7 @@ if (!empty($params)) {
 
                                 $satWs->setsResource($_Resourse);
                                 $resultDownloadPDF = $satWs->downloadPdfOpinion();
-
+                                
                                 //Obtener la URL del documento obtenido devuelto del API de SATWS
                                 preg_match_all("#<a.*?>([^<]+)</a>#", $resultDownloadPDF["sData"], $foo);
                                 $URLDownloadPDF = array_shift($foo[1]);
@@ -74,6 +75,7 @@ if (!empty($params)) {
                         $event->setnIDEv($value["id"]);
                         $event->setsTaxplayer($value["taxpayer"]["name"]);
                         $event->setsResource($value["resource"]);
+                        $event->setsResult($_Result);
                         $event->setsTypeEvent($_type);
                         $event->setsURLTaxtConpliance($URL);
                         $event->setdCreateAt($value["createdAt"]);

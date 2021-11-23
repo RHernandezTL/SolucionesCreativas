@@ -7,6 +7,7 @@ class events{
     public $nIDEv;
     public $sTaxplayer;
     public $sResource;
+    public $sResult;
     public $sTypeEvent;
     public $sURLTaxtConpliance;
     public $dCreateAt;
@@ -45,6 +46,13 @@ class events{
     public function setsResource($value) {
         $this->sResource = $value;
     }
+    
+    public function getsResult() {
+        return $this->sResult;
+    }
+    public function setsResult($value) {
+        $this->sResult = $value;
+    }
 
     public function getsTypeEvent() {
         return $this->sTypeEvent;
@@ -76,13 +84,14 @@ class events{
             self::getnIDEv(),
             self::getsTaxplayer(),
             self::getsResource(),
+            self::getsResult(),
             self::getsTypeEvent(),
             self::getsURLTaxtConpliance(),
             self::getdCreateAt()
         );
         // print_r($params);
         // exit;
-        $selectExtraction = $db->query("CALL `db_satws_v2`.`sp_insert_events_taxpayer`(?,?,?,?,?,?,?)",$params);
+        $selectExtraction = $db->query("CALL `".$GLOBALS["database"]."`.`sp_insert_events_taxpayer`(?,?,?,?,?,?,?,?)",$params);
 
         $insertError = $db->getError();
         if ($insertError) {
@@ -107,7 +116,7 @@ class events{
         $params = array(
             self::getnIdExtration()
         );
-        $selectEvents = $db->query("CALL `db_satws_v2`.`sp_select_events_taxpayer`(?)",$params);
+        $selectEvents = $db->query("CALL `".$GLOBALS["database"]."`.`sp_select_events_taxpayer`(?)",$params);
 
         $insertError = $db->getError();
         if ($insertError) {
